@@ -3,19 +3,249 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #000000;
+  --foreground: #ffffff;
+  --accent: #00f0ff;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans);
+}
+
+.hero {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.hero-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-image::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.main, .footer {
+  position: relative;
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main {
+  background: var(--background);
+}
+
+.main-content {
+  max-width: 800px;
+  padding: 6rem 2rem;
+  text-align: center;
+}
+
+.line {
+  overflow: hidden;
+  opacity: 0;
+}
+
+.line p {
+  font-size: 7rem;
+  line-height: 1;
+  margin: 1rem 0;
+  font-weight: 200;
+  letter-spacing: -2px;
+  color: var(--foreground);
+  opacity: 0.95;
+}
+
+.gallery {
+  position: relative;
+  height: 100vh;
+  background: var(--background);
+}
+
+.gallery-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: fit-content;
+}
+
+.gallery-row {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.gallery-item img {
+  transform-origin: center;
+  will-change: transform;
+  transition: transform 0.5s ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.05);
+}
+
+.floating-text {
+  position: absolute;
+  font-size: 20vw;
+  font-weight: 100;
+  color: var(--foreground);
+  opacity: 0;
+  pointer-events: none;
+  line-height: 1;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+.footer {
+  min-height: 50vh;
+}
+
+.footer a {
+  text-decoration: none;
+  font-size: 1.2rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  position: relative;
+  font-weight: 300;
+  color: var(--accent);
+  transition: text-shadow 0.3s ease;
+}
+
+.footer a::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  bottom: -4px;
+  left: 0;
+  background: var(--accent);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.footer a:hover::after {
+  transform: scaleX(1);
+}
+
+.footer a:hover {
+  text-shadow: 0 0 20px var(--accent);
+}
+
+.logo h1 {
+  font-weight: 100;
+  text-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
+}
+
+.blend-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: black;
+}
+
+.blend-text-container {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.blend-text {
+  font-size: 20vw;
+  font-weight: 900;
+  line-height: 0.8;
+  position: relative;
+  color: white;
+  margin: 0;
+  padding: 0;
+}
+
+.blend-text.difference {
+  mix-blend-mode: difference;
+}
+
+.blend-text.overlay {
+  mix-blend-mode: overlay;
+}
+
+.blend-text.exclusion {
+  mix-blend-mode: exclusion;
+}
+
+.floating-text.blend-difference {
+  mix-blend-mode: difference;
+  font-weight: 900;
+}
+
+.floating-text.blend-overlay {
+  mix-blend-mode: overlay;
+  font-weight: 900;
+}
+
+.parallax-section {
+  position: relative;
+  background: black;
+}
+
+.parallax-section img {
+  transition: transform 0.5s ease;
+}
+
+.parallax-section:hover img {
+  transform: scale(1.1);
+}
+
+@keyframes textFloat {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.blend-text {
+  animation: textFloat 10s ease infinite;
+}
+
+.blend-text:nth-child(1) { color: #ff3366; }
+.blend-text:nth-child(2) { color: #33ff66; }
+.blend-text:nth-child(3) { color: #6633ff; }
+
+.gradient-bg {
+  background: linear-gradient(45deg, #000, #333);
 }
