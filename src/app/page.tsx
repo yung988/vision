@@ -1,26 +1,51 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ReactLenis as Lenis } from "@studio-freight/react-lenis";
 
+// Array of all possible hero images
+const heroImages = [
+  'img-1.jpg',
+  'img-2.jpg',
+  'img-3.jpg',
+  'img-4.jpg',
+  'img-5.jpg',
+  'img-6.jpg',
+  'img-7.jpg',
+  'img-8.jpg',
+  'img-9.jpg',
+  'img-10.jpg',
+  'img-11.jpg',
+  'img-12.jpg',
+  'img-13.jpg'
+];
+
 export default function Home() {
   const galleryRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [heroImage, setHeroImage] = useState('');
 
   useEffect(() => {
+    // Scroll to top on page load
+    window.scrollTo(0, 0);
+
+    // Select random hero image
+    const randomImage = heroImages[Math.floor(Math.random() * heroImages.length)];
+    setHeroImage(randomImage);
+
     gsap.registerPlugin(ScrollTrigger);
     
     // Initial state
-    gsap.set(".hero-image", { scale: 0, opacity: 0 });
-    gsap.set(".logo h1", { opacity: 0, y: 30 });
-    gsap.set(".logo p", { opacity: 0, y: 20 });
+    gsap.set(".hero-image", { scale: 1, opacity: 0 });
+    gsap.set(".logo h1", { opacity: 0, y: 30, scale: 1 });
+    gsap.set(".logo p", { opacity: 0, y: 20, scale: 1 });
     gsap.set(".line", { opacity: 0 });
     gsap.set(".floating-text", { opacity: 0 });
 
-    // Initial load animation
+    // Initial load animation with subtle scaling
     const loadingTimeline = gsap.timeline();
     loadingTimeline
       .to(".logo h1", {
@@ -42,6 +67,23 @@ export default function Home() {
         ease: "power2.out"
       }, "-=1.5");
 
+    // Subtle continuous animations
+    gsap.to(".hero-image", {
+      scale: 1.05,
+      duration: 20,
+      ease: "none",
+      repeat: -1,
+      yoyo: true
+    });
+
+    gsap.to(".logo", {
+      scale: 0.95,
+      duration: 20,
+      ease: "none",
+      repeat: -1,
+      yoyo: true
+    });
+
     // Combined hero timeline
     const heroTimeline = gsap.timeline({
       scrollTrigger: {
@@ -56,7 +98,7 @@ export default function Home() {
     // First move the image up completely
     heroTimeline
       .to(".hero-image", {
-        y: "-100%",
+        y: "-120%",
         duration: 2
       })
       // Then fade out the logo
@@ -204,9 +246,9 @@ export default function Home() {
       <div ref={containerRef} className="bg-black min-h-screen w-screen overflow-x-hidden">
         <section className="hero relative h-screen w-full overflow-hidden">
           <div className="hero-image absolute inset-0">
-            <Image 
-              src="/img-2.jpg" 
-              alt="Abstract blue light" 
+            <Image
+              src={`/${heroImage}`}
+              alt="Hero Image" 
               fill
               className="object-cover"
               priority
@@ -377,7 +419,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <section className="connect-section min-h-screen bg-black relative my-40 md:my-40">
+        <section className="connect-section min-h-screen bg-black relative my-20 md:my-40">
           <div className="absolute inset-0 flex flex-col justify-center px-4 md:px-20 translate-x-[5vw] md:translate-x-[10vw]">
             <h2 className="connect-left text-5xl md:text-6xl lg:text-7xl font-bold max-w-full md:max-w-[80%] text-white leading-tight">
               WANNA WORK TOGETHER?
